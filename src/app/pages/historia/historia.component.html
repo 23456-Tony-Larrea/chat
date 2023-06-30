@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+    crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+  <title>HISTORIAS</title>
+</head>
+
+<body style="background-color: #DDDDDD;">
+<!---navbar-->
+
+  <!---targeta de historia-->
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6 offset-md-3">
+        <div class="card">
+          <div class="card-header text-center">
+           CREAR HISTORIAS
+          </div>
+          <div class="card-body">
+            <form id="story-form">
+              <div class="mb-3">
+                <label for="story-title" class="form-label">Título</label>
+                <input type="text" class="form-control" id="story-title" placeholder="Título de la historia">
+              </div>
+              <div class="mb-3">
+                <label for="story-image" class="form-label">Imagen (URL)</label>
+                <input type="text" class="form-control" id="story-image" placeholder="URL de la imagen">
+              </div>
+              <div class="mb-3">
+                <label for="story-text" class="form-label">Texto</label>
+                <textarea class="form-control" id="story-text" rows="3" placeholder="Texto de la historia"></textarea>
+              </div>
+              <div class="text-center">
+              <button type="submit" class="btn btn-primary " style="background-color: #00484E;">Publicar</button></div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row" id="story-list"></div>
+  </div>
+<!---javascript -->
+<script>
+  const storyForm = document.getElementById('story-form');
+const storyList = document.getElementById('story-list');
+
+storyForm.addEventListener('submit', function(event) {
+  event.preventDefault(); // Evita que el formulario se envíe
+
+  const title = document.getElementById('story-title').value;
+  const image = document.getElementById('story-image').value;
+  const text = document.getElementById('story-text').value;
+
+  const story = {
+    title: title,
+    image: image,
+    text: text
+  };
+
+  addStory(story);
+  clearForm();
+});
+
+function addStory(story) {
+  const storyCard = document.createElement('div');
+  storyCard.classList.add('card', 'story-card');
+
+  const storyImage = document.createElement('img');
+  storyImage.src = story.image;
+  storyImage.alt = story.title;
+  storyImage.classList.add('card-img-top');
+
+  const storyCardBody = document.createElement('div');
+  storyCardBody.classList.add('card-body');
+
+  const storyTitle = document.createElement('h5');
+  storyTitle.classList.add('card-title');
+  storyTitle.textContent = story.title;
+
+  const storyText = document.createElement('p');
+  storyText.classList.add('card-text');
+  storyText.textContent = story.text;
+
+  const editButton = document.createElement('button');
+  editButton.classList.add('btn', 'btn-primary', 'me-2');
+  editButton.textContent = 'Editar';
+  editButton.addEventListener('click', function() {
+    editStory(storyCard, story);
+  });
+
+  const deleteButton = document.createElement('button');
+  deleteButton.classList.add('btn','btn-danger');
+  deleteButton.textContent = 'Eliminar';
+  deleteButton.addEventListener('click', function() {
+    deleteStory(storyCard);
+  });
+
+  storyCardBody.appendChild(storyTitle);
+  storyCardBody.appendChild(storyText);
+  storyCardBody.appendChild(editButton);
+  storyCardBody.appendChild(deleteButton);
+
+  storyCard.appendChild(storyImage);
+  storyCard.appendChild(storyCardBody);
+
+  storyList.appendChild(storyCard);
+}
+
+function clearForm() {
+  document.getElementById('story-title').value = '';
+  document.getElementById('story-image').value = '';
+  document.getElementById('story-text').value = '';
+}
+
+function editStory(storyCard, story) {
+  const newTitle = prompt('Ingrese el nuevo título:', story.title);
+  const newImage = prompt('Ingrese la nueva URL dela imagen:', story.image);
+  const newText = prompt('Ingrese el nuevo texto:', story.text);
+
+  const updatedStory = {
+    title: newTitle,
+    image: newImage,
+    text: newText
+  };
+
+  storyCard.querySelector('.card-img-top').src = updatedStory.image;
+  storyCard.querySelector('.card-img-top').alt = updatedStory.title;
+  storyCard.querySelector('.card-title').textContent = updatedStory.title;
+  storyCard.querySelector('.card-text').textContent = updatedStory.text;
+
+  story.title = updatedStory.title;
+  story.image = updatedStory.image;
+  story.text = updatedStory.text;
+}
+
+function deleteStory(storyCard) {
+  if (confirm('¿Está seguro que desea eliminar esta historia?')) {
+    storyCard.remove();
+  }
+}
+</script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://unpkg.com/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+  <script src="https://unpkg.com/bootstrap-icons@1.7.2/dist/bootstrap-icons.min.js"></script>
+  <!---estilos css -->
+  <style>
+    .navbar-nav .nav-item:not(:last-child) .nav-link {
+      margin-right: 10em;
+      margin-top: 0.8em;
+    }
+
+    .navbar-text {
+      font-family: "Times New Roman", serif;
+    }
+
+    .yavimeet {
+      font-size: 2.6em;
+      font-weight: bolder;
+      font-family: Cambria Rounded, Cochin, Georgia, Times, 'Times New Roman', serif;
+      color: #EAA900;
+      margin-right: 3.7em;
+      margin-top: 0.1em;
+    }
+
+
+
+    .navbar-nav .nav-link i.fa-users {
+      margin-top: 0.4em;
+    }
+    .card {
+  margin-top: 30px;
+}
+
+.card-header {
+  background-color: #00484E;
+  color: #fff;
+  font-weight: bolder;
+ font-family: Arial Black, sans-serif Bla;
+
+}
+
+.card-body {
+  background-color: #f8f9fa;
+}
+
+.story-card {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  max-width: 400px;
+}
+
+.story-card .card-img-top {
+  height: 200px;
+  object-fit: cover;
+}
+  </style>
+</body>
+
+</html>

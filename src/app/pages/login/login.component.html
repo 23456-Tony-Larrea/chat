@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+    crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+  <title>Iniciar sesión</title>
+</head>
+
+<body style="background-color: #DDDDDD;">
+
+
+
+  <div class="container mt-5">
+    <div class="row justify-content-center">
+      <div class="col-md-6 mx-auto">
+        <div class="card">
+          <div class="card-body text-center">
+            <form (submit)="loginUser()">
+              <div class="mb-3">
+                <h4 class="Login">LOGIN</h4>
+                <label for="email" class="form-label"></label>
+                <input type="email" class="form-control" id="email" placeholder="Ingresa tu correo electrónico"
+                [(ngModel)]="correo"  [ngModelOptions]="{ standalone: true }" required>
+              </div>
+              <div class="mb-3">
+                <label for="password" class="form-label"></label>
+                <input type="password" class="form-control" id="password" placeholder="Ingresa tu contraseña" 
+                [(ngModel)]="password"  [ngModelOptions]="{ standalone: true }"
+                required>
+              </div>
+              <button type="submit" class="btn btn-primary " style="background-color: #00484E;">Sign In </button>
+              <div class=" text-center">
+                ¿No tienes una cuenta? <a href="/registro">Regístrate aquí</a>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://unpkg.com/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+  <script src="https://unpkg.com/bootstrap-icons@1.7.2/dist/bootstrap-icons.min.js"></script>
+  <style>
+    .navbar-nav .nav-item:not(:last-child) .nav-link {
+      margin-right: 10em;
+      margin-top: 0.8em;
+    }
+
+    .navbar-text {
+      font-family: "Times New Roman", serif;
+    }
+
+    .yavimeet {
+      font-size: 2.6em;
+      font-weight: bolder;
+      font-family: Cambria Rounded, Cochin, Georgia, Times, 'Times New Roman', serif;
+      color: #EAA900;
+      margin-right: 3.7em;
+      margin-top: 0.1em;
+    }
+
+    .Login {
+      font-weight: bolder;
+      font-family: Arial Black, sans-serif Bla;
+
+    }
+
+    .navbar-nav .nav-link i.fa-users {
+      margin-top: 0.4em;
+    }
+  </style>
+</body>
+
+</html>

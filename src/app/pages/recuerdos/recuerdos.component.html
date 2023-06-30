@@ -1,0 +1,191 @@
+<p>recuerdos works!</p>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+    crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+  <title>Recuerdos</title>
+</head>
+
+<body style="background-color: #DDDDDD;">
+<!---navbar-->
+  <nav class="navbar navbar-expand-lg " style="background-color: #00484E;">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
+      <ul class="navbar-nav  ">
+        <li class="nav-item">
+          <a class="nav-link" href="#"><i class="fas fa-home fa-2x"></i></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#"><i class="fas fa-envelope fa-2x"></i></a>
+        </li>
+        <div class="container">
+          <div class="row">
+            <div class="col-sm-12">
+              <p class="yavimeet text-center">YaviMeet</p>
+            </div>
+          </div>
+        </div>
+        <li class="nav-item">
+          <a class="nav-link" href="#"><i class="fas fa-bell fa-2x"></i></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link " href="#"><i class="fas fa-users fa-2x"></i></a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+  <!---targeta de historia-->
+  <div class="container mt-5">
+    <div class="card">
+      <div class="card-header text-center">
+        RECUERDOS
+      </div>
+      <div class="card-body">
+        <form id="createMemoryForm">
+          <div class="mb-3">
+            <label for="title" class="form-label">Título</label>
+            <input type="text" class="form-control" id="title" name="title" required>
+          </div>
+          <div class="mb-3">
+            <label for="text" class="form-label">Texto</label>
+            <textarea class="form-control" id="text" name="text" rows="3" required></textarea>
+          </div>
+          <div class="mb-3">
+            <label for="imageURL" class="form-label">URL de imagen</label>
+            <input type="url" class="form-control" id="imageURL" name="imageURL" required>
+          </div>
+          <div class="d-flex justify-content-center">
+            <button type="button" class="btn btn-secondary me-2" id="cancelBtn">Cancelar</button>
+            <button type="submit" class="btn btn-primary" style="background-color: #00484E;">Crear recuerdo</button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="row row-cols-1 row-cols-md-2 g-4 mt-4" id="memoryList">
+
+    </div>
+  </div>
+<!---javascript -->
+<script>
+// Selectores de elementos HTML
+const createMemoryForm = document.querySelector("#createMemoryForm");
+const memoryList = document.querySelector("#memoryList");
+const cancelBtn = document.querySelector("#cancelBtn");
+
+// Manejar el envío del formulario para crear un nuevo recuerdo
+createMemoryForm.addEventListener("submit", event => {
+  event.preventDefault();
+  const formData = new FormData(createMemoryForm);
+  const title = formData.get("title");
+  const text = formData.get("text");
+  const imageUrl = formData.get("imageURL");
+  createMemory(title, text, imageUrl);
+  createMemoryForm.reset();
+});
+
+// Manejar el botón de cancelar
+cancelBtn.addEventListener("click",event => {
+  createMemoryForm.reset();
+});
+
+// Función para crear un nuevo recuerdo y agregarlo a la lista
+function createMemory(title, text, imageUrl) {
+  const card = document.createElement("div");
+  card.classList.add("card");
+  const cardImage = document.createElement("img");
+  cardImage.classList.add("card-img-top");
+  cardImage.src = imageUrl;
+  const cardBody = document.createElement("div");
+  cardBody.classList.add("card-body");
+  const cardTitle = document.createElement("h5");
+  cardTitle.classList.add("card-title");
+  cardTitle.textContent = title;
+  const cardText = document.createElement("p");
+  cardText.classList.add("card-text");
+  cardText.textContent = text;
+  const deleteBtn = document.createElement("button");
+  deleteBtn.classList.add("btn", "btn-danger", "me-2");
+  deleteBtn.textContent = "Eliminar";
+  deleteBtn.addEventListener("click", () => {
+    card.remove();
+  });
+  const hideBtn = document.createElement("button");
+  hideBtn.classList.add("btn", "btn-secondary");
+  hideBtn.textContent = "Ocultar";
+  hideBtn.addEventListener("click", () => {
+    card.classList.toggle("d-none");
+  });
+  cardBody.appendChild(cardTitle);
+  cardBody.appendChild(cardText);
+  cardBody.appendChild(deleteBtn);
+  cardBody.appendChild(hideBtn);
+  card.appendChild(cardImage);
+  card.appendChild(cardBody);
+  memoryList.appendChild(card);
+}
+</script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://unpkg.com/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+  <script src="https://unpkg.com/bootstrap-icons@1.7.2/dist/bootstrap-icons.min.js"></script>
+  <!---estilos css -->
+  <style>
+    .navbar-nav .nav-item:not(:last-child) .nav-link {
+      margin-right: 10em;
+      margin-top: 0.8em;
+    }
+
+    .navbar-text {
+      font-family: "Times New Roman", serif;
+    }
+
+    .yavimeet {
+      font-size: 2.6em;
+      font-weight: bolder;
+      font-family: Cambria Rounded, Cochin, Georgia, Times, 'Times New Roman', serif;
+      color: #EAA900;
+      margin-right: 3.7em;
+      margin-top: 0.1em;
+    }
+
+
+
+    .navbar-nav .nav-link i.fa-users {
+      margin-top: 0.4em;
+    }
+    .card {
+  margin-top: 30px;
+}
+.card {
+  max-width: 400px;
+  margin: 0 auto;
+}
+.card-header {
+  background-color: #00484E;
+  color: #fff;
+  font-weight: bolder;
+ font-family: Arial Black, sans-serif Bla;
+
+}
+
+.card-img-top {
+  max-height: 200px;
+  object-fit: cover;
+}
+
+.card-body {
+  padding: 1rem;
+}
+
+
+  </style>
+</body>
+
+</html>
